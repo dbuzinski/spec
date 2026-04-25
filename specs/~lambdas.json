@@ -90,7 +90,7 @@
           "pwsh": "if (($null -eq $script:calls) -or ($script:calls -ge 3)){$script:calls=0}; ++$script:calls; $script:calls",
           "go": "func() func() int { g := 0; return func() int { g++; return g } }()",
           "erlang": "fun() -> G=case get(g) of undefined -> 1; _G -> _G end, put(g, G+1), G end.",
-          "matlab": "@() feval(@(~) getappdata(0, 'calls'), evalc('setappdata(0, ''calls'', mod(sum(getappdata(0, ''calls'')), 3) + 1)'))"
+          "matlab": "@() feval(@(~) getappdata(0, \"calls\"), evalc(\"setappdata(0, \"\"calls\"\", mod(sum(getappdata(0, \"\"calls\"\")), 3) + 1)\"))"
         }
       },
       "template": "{{lambda}} == {{{lambda}}} == {{lambda}}",
