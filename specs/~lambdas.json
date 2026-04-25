@@ -90,7 +90,7 @@
           "pwsh": "if (($null -eq $script:calls) -or ($script:calls -ge 3)){$script:calls=0}; ++$script:calls; $script:calls",
           "go": "func() func() int { g := 0; return func() int { g++; return g } }()",
           "erlang": "fun() -> G=case get(g) of undefined -> 1; _G -> _G end, put(g, G+1), G end.",
-          "matlab": "@()feval(@(x,c)c, evalc('setenv(''COUNT'', string(lookup(dictionary(NaN,1,3,1), str2double(getenv(''COUNT'')), FallbackValue=str2double(getenv(''COUNT''))+1)))'), str2double(getenv('COUNT')))"
+          "matlab": "@() feval(@(~) getappdata(0, 'calls'), evalc('setappdata(0, ''calls'', mod(sum(getappdata(0, ''calls'')), 3) + 1)'))"
         }
       },
       "template": "{{lambda}} == {{{lambda}}} == {{lambda}}",
@@ -137,7 +137,7 @@
           "pwsh": "if ($args[0] -eq \"{{x}}\") {\"yes\"} else {\"no\"}",
           "go": "func(text string) string { if text == \"{{x}}\" { return \"yes\" } else { return \"no\" } }",
           "erlang": "fun(\"{{x}}\") -> \"yes\"; (_) -> \"no\" end.",
-          "matlab": "@(text)lookup(dictionary(true, \"yes\"), text==\"{{x}}\", FallbackValue=\"no\")"
+          "matlab": "@(text) replace(string(text == \"{{x}}\"), [\"false\", \"true\"], [\"no\", \"yes\"])"
         }
       },
       "template": "<{{#lambda}}{{x}}{{/lambda}}>",
@@ -208,7 +208,7 @@
           "pwsh": "\"__$($args[0])__\"",
           "go": "func(text string) string { return \"__\" + text + \"__\" }",
           "erlang": "fun(Text) -> \"__\" ++ Text ++ \"__\" end.",
-          "matlab": "@(text)\"__\" + text + \"__\""
+          "matlab": "@(text) \"__\" + text + \"__\""
         }
       },
       "template": "{{#lambda}}FILE{{/lambda}} != {{#lambda}}LINE{{/lambda}}",
@@ -232,7 +232,7 @@
           "pwsh": "$false",
           "go": "func(text string) bool { return false }",
           "erlang": "fun(_) -> false end.",
-          "matlab": "@() false"
+          "matlab": "@(~) false"
         }
       },
       "template": "<{{^lambda}}{{static}}{{/lambda}}>",
